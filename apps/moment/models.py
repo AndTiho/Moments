@@ -37,6 +37,8 @@ class Moment(models.Model):
         related_name="moments"
     )
 
+    is_public = models.BooleanField(default=False, verbose_name="Публичный момент")
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
