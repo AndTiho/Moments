@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6aebed0e-7f61-422d-8ac4-07785d5c0517" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/moment/moment_home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/moment/public_moment_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/moment/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/moment/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/moment/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/moment/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/moment/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/moment/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/moment/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/moment/moment_confirm_delete.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/moment/moment_confirm_delete.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/moment/moment_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/moment/moment_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/moment/moment_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/moment/self_moment_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/moment/moment_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/moment/moment_home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

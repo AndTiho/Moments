@@ -1,36 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="min-h-screen bg-gradient-to-br from-rose-100 via-pink-50 to-violet-100 flex items-center justify-center p-6">
-  <div class="card w-full max-w-md rounded-[2rem] border border-white/40 bg-white/70 shadow-xl backdrop-blur-md">
-    <div class="card-body p-8">
-      <div class="mb-3 flex items-center gap-2">
-        <span class="inline-block h-3 w-3 rounded-full bg-rose-300"></span>
-        <span class="inline-block h-3 w-3 rounded-full bg-pink-200"></span>
-        <span class="inline-block h-3 w-3 rounded-full bg-violet-200"></span>
-      </div>
+<div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+    <div class="card shadow-lg border-0 w-100"
+         style="max-width: 520px; border-radius: 2rem; background: linear-gradient(135deg, #312e81, #581c87, #0f172a); color: white;">
+        <div class="card-body p-4 p-md-5">
 
-      <h2 class="text-2xl font-bold text-rose-700">Летний момент</h2>
-      <p class="mt-2 leading-relaxed text-slate-600">
-        Солнце пробивалось сквозь листву, ветер шевелил волосы, и мир будто
-        на секунду стал очень тихим и очень добрым.
-      </p>
+            <h2 class="card-title mb-3" style="color: #ddd6fe;">
+                {{ moment.title }}
+            </h2>
 
-      <div class="mt-5 flex flex-wrap gap-2">
-        <span class="rounded-full bg-rose-100 px-3 py-1 text-sm text-rose-700">нежность</span>
-        <span class="rounded-full bg-pink-100 px-3 py-1 text-sm text-pink-700">тишина</span>
-        <span class="rounded-full bg-violet-100 px-3 py-1 text-sm text-violet-700">природа</span>
-      </div>
+            <p class="card-text mb-4" style="color: rgba(255,255,255,0.75);">
+                {{ moment.details }}
+            </p>
 
-      <div class="mt-6 flex gap-3">
-        <button class="rounded-2xl bg-rose-400 px-5 py-3 font-medium text-white shadow-md transition hover:-translate-y-0.5">
-          Читать
-        </button>
-        <button class="rounded-2xl border border-rose-200 bg-white/70 px-5 py-3 font-medium text-rose-600 transition hover:bg-rose-50">
-          Сохранить
-        </button>
-      </div>
+            <div class="mb-4">
+                <span class="badge rounded-pill me-2" style="background-color: rgba(255,255,255,0.15);">луна</span>
+                <span class="badge rounded-pill me-2" style="background-color: rgba(255,255,255,0.15);">тишина</span>
+                <span class="badge rounded-pill" style="background-color: rgba(255,255,255,0.15);">магия</span>
+            </div>
+            <div class="row justify-content-center mt-4">
+                <div class="col-10 col-sm-8 col-md-6">
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'moment:moment_update' moment.pk %}"
+                           class="btn"
+                           style="background-color: rgba(139, 92, 246, 0.85); color: white; border-radius: 1rem;">
+                            Редактировать
+                        </a>
+
+                        <a href="{% url 'moment:moment_delete' moment.pk %}"
+                           class="btn"
+                           style="background-color: rgba(239, 68, 68, 0.8); color: white; border-radius: 1rem;">
+                            Удалить
+                        </a>
+
+                        <a href="{% url 'moment:home' %}"
+                           class="btn"
+                           style="background-color: rgba(195, 75, 154, 0.85); color: white; border-radius: 1rem;">
+                            На главную
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>
 {% endblock %}
