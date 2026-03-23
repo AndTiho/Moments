@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div class="container">
+    {% if user.is_authenticated %}
+    <a>Привет, {{ user.username }}</a>
+    <a href="{% url 'users:profile' user.pk %}">Профиль</a>
+    <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">
+            Выход
+        </button>
+    </form>
+    {% else %}
+    <a href="{% url 'users:login' %}">Логин</a>
+    <a href="{% url 'users:register' %}">Регистрация</a>
+    {% endif %}
+</div>

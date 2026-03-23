@@ -7,7 +7,7 @@ class MomentForm(forms.ModelForm):
     """Форма для модели Момент"""
     class Meta:
         model = Moment
-        fields = ("title", "details", "image", "music_url")
+        fields = ("title", "details", "image", "music_url", "is_public")
 
     def clean(self):
         """Общая проверка на то, что должно быть заполнено хотя бы одно из полей"""
