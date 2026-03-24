@@ -10,10 +10,9 @@ from apps.moment.models import Moment
 class CreateMomentView(LoginRequiredMixin, CreateView):
     """Контролер для создания момента"""
 
-    model = Moment
     form_class = MomentForm
     template_name = "moment/moment_form.html"
-    success_url = reverse_lazy("moment:create")
+    success_url = reverse_lazy("moment:home")
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -22,7 +21,7 @@ class CreateMomentView(LoginRequiredMixin, CreateView):
 class HomeMomentView(ListView):
     """Контролер для главной страницы"""
 
-    model = Moment
+    form_class = MomentForm
     template_name = "moment/moment_home.html"
     context_object_name = "moments"
 
@@ -36,7 +35,8 @@ class HomeMomentView(ListView):
         ).order_by("-created_at")
 
 class ListSelfMomentView(LoginRequiredMixin, ListView):
-    model = Moment
+    """Контролер для вывода списка своих моментов"""
+    form_class = MomentForm
     template_name = "moment/self_moment_list.html"
     context_object_name = "moments"
     paginate_by = 10
@@ -47,7 +47,8 @@ class ListSelfMomentView(LoginRequiredMixin, ListView):
         ).order_by("-created_at")
 
 class ListPublicMomentView(ListView):
-    model = Moment
+    """Контролер для вывода списка своих моментов"""
+    form_class = MomentForm
     template_name = "moment/public_moment_list.html"
     context_object_name = "moments"
     paginate_by = 10
@@ -58,7 +59,7 @@ class ListPublicMomentView(ListView):
         ).order_by("-created_at")
 
 class DetailMomentView(LoginRequiredMixin, DetailView):
-    model = Moment
+    form_class = MomentForm
     template_name = "moment/moment_detail.html"
     context_object_name = "moment"
 
@@ -66,7 +67,6 @@ class DetailMomentView(LoginRequiredMixin, DetailView):
         return Moment.objects.filter(Q(owner=self.request.user) | Q(is_public=True))
 
 class UpdateMomentView(LoginRequiredMixin, UpdateView):
-    model = Moment
     form_class = MomentForm
     template_name = "moment/moment_form.html"
 
@@ -77,7 +77,7 @@ class UpdateMomentView(LoginRequiredMixin, UpdateView):
         return reverse_lazy("moment:moment_detail", kwargs={"pk": self.object.pk})
 
 class DeleteMomentView(LoginRequiredMixin, DeleteView):
-    model = Moment
+    form_class = MomentForm
     template_name = "moment/moment_confirm_delete.html"
     context_object_name = "moment"
     success_url = reverse_lazy("moment:home")

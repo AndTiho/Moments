@@ -2,12 +2,14 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h1>Список личных моментов</h1>
+    <h1>Главная</h1>
 
     <div class="list-group">
+        <a href="{% url 'moment:self_moments_list' %}" class="list-group-item list-group-item-action">Мои моменты</a>
+        <a href="{% url 'moment:public_moments_list' %}" class="list-group-item list-group-item-action">Публичные</a>
       {% if moments %}
       {% for moment in moments %}
-        <a href="{% url 'moment:moment_detail' moment.pk %}" class="list-group-item list-group-item-action">
+        <a href="{% url 'moment:moment_detail' moment.pk %}" class="list-group-item list-group-item-action mt-4">
             {{ moment.title }}
         </a>
       {% endfor %}

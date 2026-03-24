@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+    <div class="card shadow-lg border-0 w-100" style="max-width: 520px; border-radius: 2rem; background: linear-gradient(135deg, #312e81, #581c87, #0f172a); color: white;">
+        <div class="card-body p-4 p-md-5 text-center">
+
+            <h2 class="mb-3" style="color: #ddd6fe;">
+                Удалить профиль?
+            </h2>
+
+            <p class="mb-4" style="color: rgba(255,255,255,0.8);">
+                Ты действительно хочешь удалить профиль
+                <strong>«{{ user.username }}»</strong>?
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn w-100 mb-2" style="background-color: rgba(239, 68, 68, 0.85); color: white; border-radius: 1rem;">
+                    Да, удалить
+                </button>
+            </form>
+
+            <a href="{% url 'users:profile' pk=request.user.pk %}" class="btn w-100" style="background-color: rgba(255,255,255,0.12); color: white; border-radius: 1rem;">
+                Отмена
+            </a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
