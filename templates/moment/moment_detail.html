@@ -13,7 +13,9 @@
             <p class="card-text mb-4" style="color: rgba(255,255,255,0.75);">
                 {{ moment.details }}
             </p>
-
+            {% if moment.image %}
+            <img src="{{ moment.image.url }}" class="img-fluid" alt="">
+            {% endif %}
             <div class="mb-4">
                 <span class="badge rounded-pill me-2" style="background-color: rgba(255,255,255,0.15);">луна</span>
                 <span class="badge rounded-pill me-2" style="background-color: rgba(255,255,255,0.15);">тишина</span>

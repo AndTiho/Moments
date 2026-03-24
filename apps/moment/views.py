@@ -58,6 +58,22 @@ class ListPublicMomentView(ListView):
             is_public=True
         ).order_by("-created_at")
 
+class SearchMomentView(ListView):
+    form_class = MomentForm
+    template_name = "moment/moment_search.html"
+    context_object_name = "moments"
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+
+        if not query:
+            return Moment.objects.none()
+
+        return Moment.objects.filter(
+            Q(title__icontains=query) |
+            Q(details__icontains=query)
+        )
+
 class DetailMomentView(LoginRequiredMixin, DetailView):
     form_class = MomentForm
     template_name = "moment/moment_detail.html"
@@ -77,7 +93,7 @@ class UpdateMomentView(LoginRequiredMixin, UpdateView):
         return reverse_lazy("moment:moment_detail", kwargs={"pk": self.object.pk})
 
 class DeleteMomentView(LoginRequiredMixin, DeleteView):
-    form_class = MomentForm
+    model = Moment
     template_name = "moment/moment_confirm_delete.html"
     context_object_name = "moment"
     success_url = reverse_lazy("moment:home")

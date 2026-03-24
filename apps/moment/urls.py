@@ -1,7 +1,7 @@
 from django.urls import path
 
 from apps.moment.views import CreateMomentView, ListSelfMomentView, ListPublicMomentView, HomeMomentView, \
-    DetailMomentView, DeleteMomentView, UpdateMomentView
+    DetailMomentView, DeleteMomentView, UpdateMomentView, SearchMomentView
 
 app_name = 'moment'
 
@@ -13,4 +13,5 @@ urlpatterns = [
     path("detail/<int:pk>/", DetailMomentView.as_view(), name="moment_detail"),
     path("update/<int:pk>/", UpdateMomentView.as_view(), name="moment_update"),
     path("delete/<int:pk>/", DeleteMomentView.as_view(), name="moment_delete"),
+    path('search/', SearchMomentView.as_view(), name='search'),
 ]

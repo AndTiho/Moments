@@ -8,11 +8,15 @@
             Выход
         </button>
     </form>
-    <a href="{% url 'moment:home' %}" >Главная</a>
-    <a href="{% url 'moment:create' %}" class="btn btn-primary mb-3" >Создать момент</a>
+
+    <a href="{% url 'moment:create' %}" class="btn btn-primary mb-3">Создать момент</a>
     {% else %}
     <a href="{% url 'users:login' %}">Логин</a>
     <a href="{% url 'users:register' %}">Регистрация</a>
     {% endif %}
-
+    <a href="{% url 'moment:home' %}">Главная</a>
+    <form method="get" action="{% url 'moment:search' %}">
+        <input type="text" name="q" placeholder="Поиск..." value="{{ request.GET.q }}">
+        <button type="submit">🔍</button>
+    </form>
 </div>

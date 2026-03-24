@@ -19,6 +19,6 @@ class MomentForm(forms.ModelForm):
 
         if not details and not image and not music_url:
             raise forms.ValidationError(
-                "Момент не может быть пустым (заполните одно из: описание/изображение/музыка."
+                "Момент не может быть пустым (заполните одно из: описание/изображение/музыка)"
             )
         return cleaned_data
