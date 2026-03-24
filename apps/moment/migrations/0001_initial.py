@@ -15,20 +15,65 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Moment',
+            name="Moment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(help_text='Подарите моменту название', max_length=50, verbose_name='Название момента')),
-                ('details', models.TextField(help_text='Опишите момент', verbose_name='Описание момента')),
-                ('image', models.ImageField(blank=True, help_text='Загрузите изображение момента', null=True, upload_to='moments/%Y/%m/%d/', verbose_name='Изображение момента')),
-                ('music_url', models.URLField(blank=True, help_text='Вставьте музыкальную ссылку', null=True, verbose_name='Музыка момента')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='moments', to=settings.AUTH_USER_MODEL, verbose_name='Владелец')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        help_text="Подарите моменту название",
+                        max_length=50,
+                        verbose_name="Название момента",
+                    ),
+                ),
+                (
+                    "details",
+                    models.TextField(
+                        help_text="Опишите момент", verbose_name="Описание момента"
+                    ),
+                ),
+                (
+                    "image",
+                    models.ImageField(
+                        blank=True,
+                        help_text="Загрузите изображение момента",
+                        null=True,
+                        upload_to="moments/%Y/%m/%d/",
+                        verbose_name="Изображение момента",
+                    ),
+                ),
+                (
+                    "music_url",
+                    models.URLField(
+                        blank=True,
+                        help_text="Вставьте музыкальную ссылку",
+                        null=True,
+                        verbose_name="Музыка момента",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="moments",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Владелец",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'момент',
-                'verbose_name_plural': 'моменты',
+                "verbose_name": "момент",
+                "verbose_name_plural": "моменты",
             },
         ),
     ]

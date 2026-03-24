@@ -1,7 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
 
 from apps.moment.forms import MomentForm
 from apps.moment.models import Moment
@@ -18,6 +24,7 @@ class CreateMomentView(LoginRequiredMixin, CreateView):
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
+
 class HomeMomentView(ListView):
     """Контролер для главной страницы"""
 
@@ -27,36 +34,35 @@ class HomeMomentView(ListView):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            return Moment.objects.filter(
-                owner=self.request.user
-            ).order_by("-created_at")
-        return Moment.objects.filter(
-            is_public=True
-        ).order_by("-created_at")
+            return Moment.objects.filter(owner=self.request.user).order_by(
+                "-created_at"
+            )
+        return Moment.objects.filter(is_public=True).order_by("-created_at")
+
 
 class ListSelfMomentView(LoginRequiredMixin, ListView):
     """Контролер для вывода списка своих моментов"""
+
     form_class = MomentForm
     template_name = "moment/self_moment_list.html"
     context_object_name = "moments"
     paginate_by = 10
 
     def get_queryset(self):
-        return Moment.objects.filter(
-            owner=self.request.user
-        ).order_by("-created_at")
+        return Moment.objects.filter(owner=self.request.user).order_by("-created_at")
+
 
 class ListPublicMomentView(ListView):
     """Контролер для вывода списка своих моментов"""
+
     form_class = MomentForm
     template_name = "moment/public_moment_list.html"
     context_object_name = "moments"
     paginate_by = 10
 
     def get_queryset(self):
-        return Moment.objects.filter(
-            is_public=True
-        ).order_by("-created_at")
+        return Moment.objects.filter(is_public=True).order_by("-created_at")
+
 
 class SearchMomentView(ListView):
     form_class = MomentForm
@@ -70,9 +76,9 @@ class SearchMomentView(ListView):
             return Moment.objects.none()
 
         return Moment.objects.filter(
-            Q(title__icontains=query) |
-            Q(details__icontains=query)
+            Q(title__icontains=query) | Q(details__icontains=query)
         )
+
 
 class DetailMomentView(LoginRequiredMixin, DetailView):
     form_class = MomentForm
@@ -81,6 +87,7 @@ class DetailMomentView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return Moment.objects.filter(Q(owner=self.request.user) | Q(is_public=True))
+
 
 class UpdateMomentView(LoginRequiredMixin, UpdateView):
     form_class = MomentForm
@@ -92,6 +99,7 @@ class UpdateMomentView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy("moment:moment_detail", kwargs={"pk": self.object.pk})
 
+
 class DeleteMomentView(LoginRequiredMixin, DeleteView):
     model = Moment
     template_name = "moment/moment_confirm_delete.html"
@@ -100,4 +108,3 @@ class DeleteMomentView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return Moment.objects.filter(owner=self.request.user)
-

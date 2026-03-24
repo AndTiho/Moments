@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('moment', '0001_initial'),
+        ("moment", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='moment',
-            name='details',
-            field=models.TextField(blank=True, help_text='Опишите момент', null=True, verbose_name='Описание момента'),
+            model_name="moment",
+            name="details",
+            field=models.TextField(
+                blank=True,
+                help_text="Опишите момент",
+                null=True,
+                verbose_name="Описание момента",
+            ),
         ),
     ]

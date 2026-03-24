@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('moment', '0002_alter_moment_details'),
+        ("moment", "0002_alter_moment_details"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='moment',
-            name='is_public',
-            field=models.BooleanField(default=False, verbose_name='Публичный момент'),
+            model_name="moment",
+            name="is_public",
+            field=models.BooleanField(default=False, verbose_name="Публичный момент"),
         ),
     ]

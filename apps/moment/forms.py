@@ -5,6 +5,7 @@ from apps.moment.models import Moment
 
 class MomentForm(forms.ModelForm):
     """Форма для модели Момент"""
+
     class Meta:
         model = Moment
         fields = ("title", "details", "image", "music_url", "is_public")
