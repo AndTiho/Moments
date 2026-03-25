@@ -36,13 +36,30 @@ class UserTests(TestCase):
                 "username": "alice_new",
                 "email": "alice@example.com",
                 "first_name": "Alice",
-                "last_name": "Moon",
                 "about_me": "Привет",
+                "header_name_preference": "username",
             },
         )
         self.assertEqual(response.status_code, 302)
         self.user.refresh_from_db()
         self.assertEqual(self.user.username, "alice_new")
+
+    def test_update_profile_header_name(self):
+        self.client.login(username="alice", password="testpass123")
+        response = self.client.post(
+            reverse("users:update", kwargs={"pk": self.user.pk}),
+            {
+                "username": "alice_new",
+                "email": "alice@example.com",
+                "first_name": "Alice",
+                "about_me": "Привет",
+                "header_name_preference": "name",
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.header_display_name, "Alice")
+
 
     def test_delete_profile(self):
         self.client.login(username="alice", password="testpass123")

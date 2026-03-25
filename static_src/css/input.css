@@ -1,0 +1,48 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "moments";
+  default: true;
+
+  --color-base-100: oklch(98% 0.01 95);
+  --color-base-200: oklch(95% 0.015 95);
+  --color-base-300: oklch(90% 0.02 95);
+  --color-base-content: oklch(30% 0.03 250);
+
+  --color-primary: oklch(72% 0.08 220);
+  --color-primary-content: oklch(20% 0.03 220);
+
+  --color-secondary: oklch(80% 0.05 170);
+  --color-secondary-content: oklch(25% 0.03 170);
+
+  --color-accent: oklch(78% 0.06 140);
+  --color-accent-content: oklch(20% 0.03 140);
+
+  --color-neutral: oklch(40% 0.03 240);
+  --color-neutral-content: oklch(98% 0.01 95);
+
+  --radius-box: 1.5rem;
+  --radius-field: 1.25rem;
+  --radius-selector: 9999px;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.9), transparent 35%),
+    linear-gradient(180deg, #dfe9f3 0%, #f7fbff 45%, #fdfdf9 100%);
+}
+
+.hero-soft {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.42)),
+    radial-gradient(circle at top right, rgba(200, 230, 255, 0.35), transparent 30%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(14px);
+}
+
+textarea::placeholder,
+input::placeholder {
+  color: rgba(70, 85, 100, 0.5);
+}
+

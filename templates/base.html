@@ -2,19 +2,20 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Moments</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Moments{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
 
-<body>
-{% include "includes/header.html" %}
-<div class="container">
-    {% block content %}
-    {% endblock %}
-</div>
-{% include "includes/footer.html" %}
-</body>
+<body class="min-h-screen bg-base-200 text-base-content">
+    {% include "includes/header.html" %}
 
+    <main class="max-w-6xl mx-auto px-4 py-6">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% include "includes/footer.html" %}
+</body>
 </html>

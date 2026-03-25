@@ -7,6 +7,12 @@
     <p> Почта: {{ user.email }}</p>
     <p> Обо мне: {{ user.about_me }}</p>
     <p>Дата регистрации: {{ user.date_joined }}</p>
+    <div class="form-control">
+    <label class="label">
+        <span class="label-text">Что показывать в хедере</span>
+    </label>
+    {{ user.header_name_preference }}
+</div>
     <a href="{% url 'users:update' pk=request.user.pk %}" class="btn btn-primary mt-3">
         Редактировать профиль
     </a>
