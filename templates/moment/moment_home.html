@@ -3,20 +3,28 @@
 {% block content %}
 <div class="container mt-4">
     <h1>Главная</h1>
-
+    <div class="card">
+        <h1>Остановись на миг</h1>
+        <p>
+            Даже если вокруг шум, ты всё ещё можешь вернуться к себе.
+            Что ты чувствуешь прямо сейчас?
+        </p>
+        <textarea placeholder="Я сейчас в метро... люди такие люди..."></textarea>
+        <button>Сохранить момент</button>
+    </div>
     <div class="list-group">
         <a href="{% url 'moment:self_moments_list' %}" class="list-group-item list-group-item-action">Мои моменты</a>
         <a href="{% url 'moment:public_moments_list' %}" class="list-group-item list-group-item-action">Публичные</a>
-      {% if moments %}
-      {% for moment in moments %}
+        {% if moments %}
+        {% for moment in moments %}
         <a href="{% url 'moment:moment_detail' moment.pk %}" class="list-group-item list-group-item-action mt-4">
             {{ moment.title }}
         </a>
-      {% endfor %}
+        {% endfor %}
     </div>
-  {% else %}
-  <p> У вас пока нет моментов</p>
-  {% endif %}
+    {% else %}
+    <p> У вас пока нет моментов</p>
+    {% endif %}
 
 </div>
 {% endblock %}

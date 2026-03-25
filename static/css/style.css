@@ -1,0 +1,71 @@
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #dfe9f3, #ffffff);
+      color: #2f3a45;
+    }
+
+    .card {
+      width: 90%;
+      max-width: 600px;
+      padding: 40px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #52606d;
+      margin-bottom: 24px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 16px;
+      border: 1px solid #d8e2ea;
+      border-radius: 16px;
+      resize: none;
+      font-size: 1rem;
+      font-family: inherit;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.85);
+      color: #2f3a45;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #a8c7d8;
+      box-shadow: 0 0 0 4px rgba(168, 199, 216, 0.2);
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 999px;
+      background: #b8d8e8;
+      color: #234;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      background: #a9cfdf;
+    }
