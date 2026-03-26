@@ -1,71 +1,111 @@
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #dfe9f3, #ffffff);
-      color: #2f3a45;
-    }
 
-    .card {
-      width: 90%;
-      max-width: 600px;
-      padding: 40px;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      text-align: center;
-    }
+.nature-title {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
 
-    h1 {
-      margin-top: 0;
-      font-size: 2rem;
-      font-weight: 600;
-    }
+.site-kicker {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2.2rem;
+    font-weight: 500;
+    line-height: 1;
+    color: rgba(38, 50, 70, 0.9);
+}
 
-    p {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: #52606d;
-      margin-bottom: 24px;
-    }
+.hero-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.6rem, 5vw, 4.8rem);
+    font-weight: 600;
+    line-height: 0.95;
+    color: rgba(28, 38, 56, 0.95);
+}
 
-    textarea {
-      width: 100%;
-      min-height: 120px;
-      padding: 16px;
-      border: 1px solid #d8e2ea;
-      border-radius: 16px;
-      resize: none;
-      font-size: 1rem;
-      font-family: inherit;
-      box-sizing: border-box;
-      background: rgba(255, 255, 255, 0.85);
-      color: #2f3a45;
-    }
+.hero-description {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: clamp(1.15rem, 1.9vw, 1.55rem);
+    line-height: 1.1;
+    color: rgba(42, 56, 78, 0.72);
+}
 
-    textarea:focus {
-      outline: none;
-      border-color: #a8c7d8;
-      box-shadow: 0 0 0 4px rgba(168, 199, 216, 0.2);
-    }
+.hero-note {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.8vw, 1.5rem);
 
-    button {
-      margin-top: 20px;
-      padding: 14px 28px;
-      border: none;
-      border-radius: 999px;
-      background: #b8d8e8;
-      color: #234;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(49, 61, 150, 0.65);
+}
 
-    button:hover {
-      transform: translateY(-2px);
-      background: #a9cfdf;
+.hero-sky {
+    position: relative;
+    background: linear-gradient(
+        135deg,
+        rgba(190, 225, 190, 0.85),
+        rgba(225, 245, 225, 0.65)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow: 0 18px 45px rgba(80, 100, 120, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.hero-sky::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 160px 90px at 14% 78%, rgba(126, 170, 120, 0.10) 0%, transparent 68%),
+        radial-gradient(ellipse 200px 110px at 90% 88%, rgba(110, 155, 110, 0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 120px 70px at 8% 92%, rgba(85, 135, 85, 0.08) 0%, transparent 72%);
+    pointer-events: none;
+}
+
+.hero-sky::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 24%, transparent 76%, rgba(240,248,240,0.18) 100%);
+    pointer-events: none;
+}
+
+.moments-flow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+
+.floating-card {
+    display: block;
+    width: 100%;
+    min-height: 120px;
+    transition: all 0.25s ease;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.floating-card .card-body {
+    padding: 1.75rem;
+}
+
+.floating-card:hover {
+    transform: translateY(-4px) scale(1.01);
+}
+
+@media (min-width: 768px) {
+    .moments-flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.5rem;
     }
+}
+
+@media (min-width: 1280px) {
+    .moments-flow {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}

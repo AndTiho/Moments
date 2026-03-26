@@ -6,16 +6,21 @@
     <title>{% block title %}Moments{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+          rel="stylesheet">
 </head>
 
-<body class="min-h-screen bg-base-200 text-base-content">
-    {% include "includes/header.html" %}
+<body class="min-h-screen text-base-content">
+{% include "includes/header.html" %}
 
-    <main class="max-w-6xl mx-auto px-4 py-6">
-        {% block content %}
-        {% endblock %}
-    </main>
+<main class="max-w-6xl mx-auto px-4 py-6">
+    {% block content %}
+    {% endblock %}
+</main>
 
-    {% include "includes/footer.html" %}
+{% include "includes/footer.html" %}
 </body>
 </html>

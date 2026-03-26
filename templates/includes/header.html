@@ -30,9 +30,11 @@
             </form>
 
             {% if user.is_authenticated %}
-            <a href="{% url 'moment:create' %}" class="btn btn-primary btn-sm rounded-full whitespace-nowrap">
+            {% if request.resolver_match.url_name != 'home' %}
+            <a href="{% url 'moment:create' %}" class="btn btn-primary rounded-full">
                 Создать момент
             </a>
+            {% endif %}
             {% endif %}
         </div>
 

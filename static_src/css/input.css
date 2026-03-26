@@ -5,9 +5,9 @@
   name: "moments";
   default: true;
 
-  --color-base-100: oklch(98% 0.01 95);
-  --color-base-200: oklch(95% 0.015 95);
-  --color-base-300: oklch(90% 0.02 95);
+  --color-base-100: oklch(97% 0.012 235);
+  --color-base-200: oklch(94% 0.014 235);
+  --color-base-300: oklch(90% 0.018 235);
   --color-base-content: oklch(30% 0.03 250);
 
   --color-primary: oklch(72% 0.08 220);
@@ -29,8 +29,16 @@
 
 body {
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.9), transparent 35%),
-    linear-gradient(180deg, #dfe9f3 0%, #f7fbff 45%, #fdfdf9 100%);
+    radial-gradient(ellipse 420px 180px at 12% 10%, rgba(255, 255, 255, 0.95) 0%, rgba(255,255,255,0.72) 38%, transparent 65%),
+    radial-gradient(ellipse 380px 160px at 78% 8%, rgba(255, 255, 255, 0.92) 0%, rgba(255,255,255,0.60) 35%, transparent 68%),
+    radial-gradient(ellipse 300px 130px at 62% 22%, rgba(255, 255, 255, 0.62) 0%, rgba(255,255,255,0.28) 42%, transparent 72%),
+    linear-gradient(180deg, #b9d7f2 0%, #d9ebfa 34%, #eef7fb 62%, #edf6ef 100%);
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+    background-image: url('/static/images/SkyEv.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .hero-soft {
@@ -45,4 +53,6 @@ textarea::placeholder,
 input::placeholder {
   color: rgba(70, 85, 100, 0.5);
 }
+
+
 

@@ -3,56 +3,87 @@
 {% block title %}Главная | Moments{% endblock %}
 
 {% block content %}
-<div class="space-y-8">
+<div class="max-w-6xl mx-auto px-4 py-6 md:px-6 md:py-10 space-y-12 md:space-y-16">
 
-    <section class="hero-soft rounded-[2rem] p-6 md:p-10 shadow-xl">
-        <div class="max-w-3xl">
-            <h1 class="text-3xl md:text-5xl font-semibold leading-tight mb-4">
-                Остановись на миг
-            </h1>
-            <p class="text-base md:text-lg text-base-content/70 mb-6 leading-relaxed">
-                Даже если вокруг шум, ты всё ещё можешь вернуться к себе.
-                Пара спокойных слов иногда меняет весь день.
+    <section class="hero-sky rounded-[2.5rem] px-6 py-12 md:px-10 md:py-16 overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <p class="site-kicker mb-4">
+                Moments
             </p>
 
-            <div class="card bg-base-100/80 backdrop-blur border border-white/40 shadow-lg">
-                <div class="card-body">
-                    <textarea
-                        class="textarea textarea-bordered w-full min-h-32 rounded-3xl"
-                        placeholder="Я сейчас в метро... люди такие люди..."
-                    ></textarea>
+            <h1 class="hero-title mb-5">
+                Остановись на миг
+            </h1>
 
-                    <div class="mt-4 flex justify-end">
-                        <button class="btn btn-primary rounded-full px-6">
-                            Сохранить момент
-                        </button>
-                    </div>
-                </div>
+            <p class="hero-description max-w-3xl mx-auto mb-8">
+                Здесь не нужно спешить. Мир может подождать. Этот уголок — для твоих тихих мыслей,
+                света внутри и всего, что хочется бережно сохранить в настоящем.
+            </p>
+
+            <div class="flex flex-col items-center gap-3">
+                <a href="{% url 'moment:create' %}"
+                   class="btn btn-primary rounded-full px-8 min-h-14 text-base shadow-lg hover:shadow-xl hover:scale-[1.02] transition mx-auto">
+                    Создать момент
+                </a>
+
+                <p class="hero-note max-w-md text-center">
+                    Не соцсеть. Не шум. Просто твой живой след в этом мире.
+                </p>
             </div>
         </div>
     </section>
-    <section>
-        <div class="mb-4">
-            <h2 class="text-2xl font-semibold">Последние моменты</h2>
+
+    <section class="space-y-5">
+        <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+                <h2 class="nature-title text-3xl md:text-4xl text-base-content">
+                    Мои моменты
+                </h2>
+                <p class="text-base md:text-lg text-base-content/65 mt-2">
+                    Всё важное уже происходит. Здесь — только то, что ты почувствовала.
+                </p>
+            </div>
         </div>
 
         {% if moments %}
-            <div class="grid gap-4">
-                {% for moment in moments %}
-                    <a href="{% url 'moment:moment_detail' moment.pk %}"
-                       class="card bg-base-100 shadow-md hover:shadow-lg transition border border-base-200">
-                        <div class="card-body">
-                            <h3 class="card-title text-lg">{{ moment.title }}</h3>
-                        </div>
-                    </a>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="card bg-base-100 shadow-sm">
+        <div class="moments-flow">
+            {% for moment in moments %}
+            <a href="{% url 'moment:moment_detail' moment.pk %}"
+               class="floating-card card bg-base-100/90 border border-white/50 shadow-md hover:shadow-xl transition duration-300 rounded-[2rem]">
                 <div class="card-body">
-                    <p class="text-base-content/70">У вас пока нет моментов.</p>
+                    <p class="text-xs uppercase tracking-[0.16em] text-base-content/40">
+                        {{ moment.created_at|date:"d.m.Y" }}
+                    </p>
+
+                    <h3 class="text-xl md:text-2xl font-semibold text-base-content leading-snug">
+                        {{ moment.title }}
+                    </h3>
+
+                    {% if moment.description %}
+                    <p class="text-base-content/65 leading-relaxed mt-2">
+                        {{ moment.description|truncatechars:180 }}
+                    </p>
+                    {% endif %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card bg-base-100/90 border border-white/50 shadow-sm rounded-[2rem]">
+            <div class="card-body py-10">
+                <h3 class="text-xl md:text-2xl font-semibold text-base-content mb-2">
+                    Пока тихо 🌿
+                </h3>
+                <p class="text-base-content/65 mb-5">
+                    У тебя ещё нет моментов, но первый может появиться уже сейчас.
+                </p>
+                <div>
+                    <a href="{% url 'moment:create' %}" class="btn btn-primary rounded-full px-6">
+                        Создать первый момент
+                    </a>
                 </div>
             </div>
+        </div>
         {% endif %}
     </section>
 
