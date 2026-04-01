@@ -60,7 +60,6 @@ class UserTests(TestCase):
         self.user.refresh_from_db()
         self.assertEqual(self.user.header_display_name, "Alice")
 
-
     def test_delete_profile(self):
         self.client.login(username="alice", password="testpass123")
         response = self.client.post(

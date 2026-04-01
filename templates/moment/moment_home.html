@@ -22,7 +22,18 @@
 
             <div class="flex flex-col items-center gap-3">
                 <a href="{% url 'moment:create' %}"
-                   class="btn btn-primary rounded-full px-8 min-h-14 text-base shadow-lg hover:shadow-xl hover:scale-[1.02] transition mx-auto">
+                   class="btn rounded-full px-8 min-h-14 text-base
+                        bg-gradient-to-r from-green-200/40 to-blue-200/40
+                        text-slate-700
+                        border border-white/30
+                        shadow-sm
+                        shadow-[inset_0_1px_4px_rgba(255,255,255,0.25)]
+                        hover:from-green-200/80 hover:to-blue-200/80
+                        hover:shadow-lg hover:-translate-y-[2px] hover:brightness-105
+                        transition-all duration-300
+                        cursor-pointer
+                        active:scale-[0.9]
+                        mx-auto">
                     Создать момент
                 </a>
 
@@ -40,51 +51,53 @@
                     Мои моменты
                 </h2>
                 <p class="text-base md:text-lg text-base-content/65 mt-2">
-                    Всё важное уже происходит. Здесь — только то, что ты почувствовала.
+                    Всё важное уже происходит. Здесь — только то, что ты чувствуешь.
                 </p>
             </div>
         </div>
 
-        {% if moments %}
-        <div class="moments-flow">
-            {% for moment in moments %}
-            <a href="{% url 'moment:moment_detail' moment.pk %}"
-               class="floating-card card bg-base-100/90 border border-white/50 shadow-md hover:shadow-xl transition duration-300 rounded-[2rem]">
-                <div class="card-body">
-                    <p class="text-xs uppercase tracking-[0.16em] text-base-content/40">
-                        {{ moment.created_at|date:"d.m.Y" }}
-                    </p>
+{% if moments %}
+<div class="moments-flow">
+    {% for moment in moments %}
+    <a href="{% url 'moment:moment_detail' moment.pk %}"
+       class="floating-card card shadow-md hover:shadow-xl transition duration-300 rounded-[2rem] overflow-hidden">
 
-                    <h3 class="text-xl md:text-2xl font-semibold text-base-content leading-snug">
-                        {{ moment.title }}
-                    </h3>
-
-                    {% if moment.description %}
-                    <p class="text-base-content/65 leading-relaxed mt-2">
-                        {{ moment.description|truncatechars:180 }}
-                    </p>
-                    {% endif %}
-                </div>
-            </a>
-            {% endfor %}
-        </div>
-        {% else %}
-        <div class="card bg-base-100/90 border border-white/50 shadow-sm rounded-[2rem]">
-            <div class="card-body py-10">
-                <h3 class="text-xl md:text-2xl font-semibold text-base-content mb-2">
-                    Пока тихо 🌿
-                </h3>
-                <p class="text-base-content/65 mb-5">
-                    У тебя ещё нет моментов, но первый может появиться уже сейчас.
-                </p>
-                <div>
-                    <a href="{% url 'moment:create' %}" class="btn btn-primary rounded-full px-6">
-                        Создать первый момент
-                    </a>
-                </div>
-            </div>
-        </div>
+        {% if moment.image %}
+        <figure class="floating-card-preview">
+            <img src="{{ moment.image.url }}" alt="{{ moment.title }}">
+        </figure>
         {% endif %}
+
+        <div class="card-body">
+            <p class="floating-card-time">
+                {{ moment.created_at|date:"d.m.Y H:i" }}...
+            </p>
+
+            <h3 class="floating-card-title">
+                {{ moment.title }}
+            </h3>
+
+            {% if not moment.image and moment.description %}
+            <p class="floating-card-description">
+                {{ moment.description|truncatechars:140 }}
+            </p>
+            {% endif %}
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card bg-base-100/90 border border-white/50 shadow-sm rounded-[2rem]">
+    <div class="card-body py-10">
+        <h3 class="text-xl md:text-2xl font-semibold text-base-content mb-2">
+            Пока тихо 🌿
+        </h3>
+        <p class="text-base-content/65 mb-5">
+            У тебя ещё нет моментов, но первый может появиться уже сейчас.
+        </p>
+    </div>
+</div>
+{% endif %}
     </section>
 
 </div>
