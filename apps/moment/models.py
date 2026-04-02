@@ -1,5 +1,8 @@
 from django.conf import settings
 from django.db import models
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
 
 
 class Moment(models.Model):
@@ -41,6 +44,11 @@ class Moment(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            self.image.delete(save=False)
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return self.title

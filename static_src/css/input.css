@@ -54,5 +54,12 @@ input::placeholder {
   color: rgba(70, 85, 100, 0.5);
 }
 
+.moment-title {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+}
+
 
 
