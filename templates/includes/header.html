@@ -1,5 +1,5 @@
 <header class="relative z-50 border-b border-base-300 bg-base-100/80 backdrop-blur">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap items-center gap-4 justify-between">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center gap-4 justify-between">
 
         <!-- Левая часть -->
         <nav class="flex flex-wrap items-center gap-2">
@@ -31,7 +31,16 @@
 
             {% if user.is_authenticated %}
             {% if request.resolver_match.url_name != 'home' %}
-            <a href="{% url 'moment:create' %}" class="btn btn-primary rounded-full">
+            <a href="{% url 'moment:create' %}"
+               class="btn rounded-full px-3 h-8 text-xs
+               bg-gradient-to-r from-green-200/40 to-blue-200/40
+               text-slate-700
+               border border-white/30
+               shadow-sm
+               hover:from-green-200/80 hover:to-blue-200/80
+               hover:shadow-lg hover:-translate-y-[2px]
+               transition-all duration-300
+               active:scale-[0.95]">
                 Создать момент
             </a>
             {% endif %}
