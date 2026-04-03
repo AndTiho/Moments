@@ -19,10 +19,33 @@ class MomentForm(forms.ModelForm):
         else:
             self._old_image = None
 
+    image_clear = forms.BooleanField(required=False)
 
     class Meta:
         model = Moment
         fields = ("title", "details", "image", "music_url", "is_public")
+        widgets = {
+            "title": forms.TextInput(attrs={
+                "class": "input input-bordered w-full rounded-2xl",
+                "placeholder": "Например: Тёплый ветер и чай с мятой",
+            }),
+            "details": forms.Textarea(attrs={
+                "class": "textarea textarea-bordered w-full rounded-2xl min-h-40",
+                "placeholder": "Что ты чувствуешь прямо сейчас?",
+            }),
+            "image": forms.FileInput(attrs={
+                "class": "file-input file-input-bordered w-full rounded-2xl",
+                "id": "image-input",
+                "accept": "image/*",
+            }),
+            "music_url": forms.URLInput(attrs={
+                "class": "input input-bordered w-full rounded-2xl",
+                "placeholder": "https://...",
+            }),
+            "is_public": forms.CheckboxInput(attrs={
+                "class": "toggle toggle-primary",
+            }),
+        }
 
     def clean_image(self):
         image = self.cleaned_data.get("image")
@@ -97,17 +120,19 @@ class MomentForm(forms.ModelForm):
         uploaded_new_image = "image" in self.files
 
         instance = super().save(commit=False)
+
+        if self.cleaned_data.get("image_clear"):
+            instance.image = None
+
         new_image = instance.image.name if instance.image else None
 
         if commit:
             instance.save()
             self.save_m2m()
 
-        # clear: изображения больше нет
         if old_image and not new_image:
             self._old_image.delete(save=False)
 
-        # замена: новое изображение сохранено, имя стало другим
         elif uploaded_new_image and old_image and new_image and old_image != new_image:
             self._old_image.delete(save=False)
 

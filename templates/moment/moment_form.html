@@ -1,16 +1,157 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<div class="container mt-4">
-    {% if form.instance.pk %}
-    <h1>Редактировать момент</h1>
-    {% else %}
-    <h1>Создать момент</h1>
-    {% endif %}`
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Сохранить</button>
-    </form>
-</div>
+<section class="max-w-6xl mx-auto px-4 py-10">
+    <div class="max-w-3xl mb-6">
+        <h1 class="nature-title text-3xl md:text-4xl">
+            {{ title }}
+        </h1>
+        <p class="text-base-content/60 mt-2">
+            Здесь можно бережно сохранить то, что хочется не потерять.
+        </p>
+    </div>
+
+    <div>
+        <form method="post" enctype="multipart/form-data" class="space-y-5 w-full">
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-error">
+                <span>{{ form.non_field_errors.0 }}</span>
+            </div>
+            {% endif %}
+
+            <div class="lg:flex gap-15">
+                <div class="w-2/5 space-y-5">
+                    <div class="rounded-2xl bg-base-100/30 backdrop-blur-md shadow-md p-4 space-y-2 transition hover:shadow-lg hover:-translate-y-1">
+                        <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium">
+                            Заголовок
+                        </label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                        <p class="text-error text-sm">{{ form.title.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="rounded-2xl bg-base-100/30 backdrop-blur-md shadow-md p-4 space-y-2 transition hover:shadow-lg hover:-translate-y-1">
+                        <label for="{{ form.details.id_for_label }}" class="block text-sm font-medium">
+                            Описание
+                        </label>
+                        {{ form.details }}
+                        {% if form.details.errors %}
+                        <p class="text-error text-sm">{{ form.details.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="rounded-2xl bg-base-100/30 backdrop-blur-md shadow-md p-4 space-y-2 transition hover:shadow-lg hover:-translate-y-1">
+                        <label for="{{ form.image.id_for_label }}" class="block text-sm font-medium">
+                            Изображение
+                        </label>
+                        {% if form.instance.image %}
+                        <label class="flex items-center gap-2 mt-2 cursor-pointer">
+                            {{ form.image_clear }}
+                            <span class="text-sm opacity-70">Удалить изображение</span>
+                        </label>
+                        {% endif %}
+                        {{ form.image }}
+                        {% if form.image.errors %}
+                        <p class="text-error text-sm">{{ form.image.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="rounded-2xl bg-base-100/30 backdrop-blur-md shadow-md p-4 space-y-2 transition hover:shadow-lg hover:-translate-y-1">
+                        <label for="{{ form.music_url.id_for_label }}" class="block text-sm font-medium">
+                            Ссылка на музыку
+                        </label>
+                        {{ form.music_url }}
+                        {% if form.music_url.errors %}
+                        <p class="text-error text-sm">{{ form.music_url.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="rounded-2xl bg-base-100/30 backdrop-blur-md shadow-md p-4 transition hover:shadow-lg hover:-translate-y-1">
+                        <div class="form-control">
+                            <label class="label cursor-pointer justify-start gap-3">
+                                {{ form.is_public }}
+                                <span class="label-text">Сделать момент публичным</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 pt-2 ">
+                        <button type="submit"
+                                class="btn btn-primary rounded-full px-6 transition hover:shadow-lg hover:-translate-y-1">
+                            {{ submit_label }}
+                        </button>
+                        <a href="{% url 'moment:home' %}"
+                           class="btn btn-ghost rounded-full px-6 transition hover:shadow-lg hover:-translate-y-1">
+                            Отмена
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="w-3/5">
+
+                    <div class=" space-y-4">
+
+
+                        <div class="rounded-[2rem] bg-base-100/10 shadow-xl p-4 transition hover:shadow-lg hover:-translate-y-1 ">
+                            <div class="relative overflow-hidden min-h-[420px]">
+
+                                {% if form.instance.image %}
+                                <img
+                                        id="image-preview"
+                                        src="{{ form.instance.image.url }}"
+                                        alt="Предпросмотр изображения"
+                                        class="w-full h-full object-cover"
+                                >
+                                {% else %}
+                                <img
+                                        id="image-preview"
+                                        src="{% static 'images/moment-preview-demo.png' %}"
+                                        alt="Демо-изображение для предпросмотра"
+                                        class="w-full h-full object-cover"
+                                >
+                                {% endif %}
+
+                                <div class="absolute inset-x-0 bottom-0 p-6">
+                                    <p class="text-white text-sm md:text-base max-w-md drop-shadow-md">
+                                        Здесь постепенно проявляется образ твоего момента.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<script>
+    const input = document.getElementById('image-input');
+    const preview = document.getElementById('image-preview');
+
+    if (input) {
+        input.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+</script>
 {% endblock %}
+
+
+
+

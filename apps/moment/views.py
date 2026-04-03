@@ -24,6 +24,16 @@ class CreateMomentView(LoginRequiredMixin, CreateView):
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["submit_label"] = "Сохранить момент"
+        context["title"] = "Создать момент"
+        return context
+
+    def post(self, request, *args, **kwargs):
+        print("FILES:", request.FILES)
+        return super().post(request, *args, **kwargs)
+
 
 class HomeMomentView(ListView):
     """Контролер для главной страницы"""
@@ -98,6 +108,12 @@ class UpdateMomentView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy("moment:moment_detail", kwargs={"pk": self.object.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["submit_label"] = "Сохранить изменения"
+        context["title"] = "Редактировать момент"
+        return context
 
 
 class DeleteMomentView(LoginRequiredMixin, DeleteView):
