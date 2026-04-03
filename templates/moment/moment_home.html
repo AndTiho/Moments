@@ -56,48 +56,48 @@
             </div>
         </div>
 
-{% if moments %}
-<div class="moments-flow">
-    {% for moment in moments %}
-    <a href="{% url 'moment:moment_detail' moment.pk %}"
-       class="floating-card card shadow-md hover:shadow-xl transition duration-300 rounded-[2rem] overflow-hidden">
+        {% if moments %}
+        <div class="moments-flow">
+            {% for moment in moments %}
+            <a href="{% url 'moment:moment_detail' moment.pk %}"
+               class="floating-card card shadow-md hover:shadow-xl transition duration-300 rounded-[2rem] overflow-hidden {% if not moment.image %}floating-card--text-only{% endif %}">
 
-        {% if moment.image %}
-        <figure class="floating-card-preview">
-            <img src="{{ moment.image.url }}" alt="{{ moment.title }}">
-        </figure>
-        {% endif %}
+                {% if moment.image %}
+                <figure class="floating-card-preview">
+                    <img src="{{ moment.image.url }}" alt="{{ moment.title }}">
+                </figure>
+                {% endif %}
 
-        <div class="card-body">
-            <p class="floating-card-time">
-                {{ moment.created_at|date:"d.m.Y H:i" }}...
-            </p>
+                <div class="card-body">
+                    <p class="floating-card-time">
+                        {{ moment.created_at|date:"d.m.Y H:i" }}...
+                    </p>
 
-            <h3 class="floating-card-title">
-                {{ moment.title }}
-            </h3>
+                    <h3 class="floating-card-title">
+                        {{ moment.title }}
+                    </h3>
 
-            {% if not moment.image and moment.description %}
-            <p class="floating-card-description">
-                {{ moment.description|truncatechars:140 }}
-            </p>
-            {% endif %}
+                    {% if not moment.image and moment.details %}
+                    <p class="floating-card-description">
+                        {{ moment.details|truncatechars:140 }}
+                    </p>
+                    {% endif %}
+                </div>
+            </a>
+            {% endfor %}
         </div>
-    </a>
-    {% endfor %}
-</div>
-{% else %}
-<div class="card bg-base-100/90 border border-white/50 shadow-sm rounded-[2rem]">
-    <div class="card-body py-10">
-        <h3 class="text-xl md:text-2xl font-semibold text-base-content mb-2">
-            Пока тихо 🌿
-        </h3>
-        <p class="text-base-content/65 mb-5">
-            У тебя ещё нет моментов, но первый может появиться уже сейчас.
-        </p>
-    </div>
-</div>
-{% endif %}
+        {% else %}
+        <div class="card bg-base-100/90 border border-white/50 shadow-sm rounded-[2rem]">
+            <div class="card-body py-10">
+                <h3 class="text-xl md:text-2xl font-semibold text-base-content mb-2">
+                    Пока тихо 🌿
+                </h3>
+                <p class="text-base-content/65 mb-5">
+                    У тебя ещё нет моментов, но первый может появиться уже сейчас.
+                </p>
+            </div>
+        </div>
+        {% endif %}
     </section>
 
 </div>

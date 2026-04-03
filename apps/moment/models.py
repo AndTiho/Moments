@@ -9,7 +9,7 @@ class Moment(models.Model):
     """Модель для создания настоящего момента"""
 
     title = models.CharField(
-        max_length=50,
+        max_length=100,
         verbose_name="Название момента",
         help_text="Подарите моменту название",
     )
