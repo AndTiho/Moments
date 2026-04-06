@@ -1,20 +1,54 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
-<div class="container mt-4">
-    <h1>Список личных моментов</h1>
+<div class="max-w-6xl mx-auto px-4 py-6 md:px-6 md:py-10 space-y-12 md:space-y-16">
+    <section class="space-y-5">
+        <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+                <h2 class="nature-title text-3xl md:text-4xl text-base-content">
+                    Список моих моментов
+                </h2>
+                <p class="text-base md:text-lg text-base-content/65 mt-2">
+                    Всё важное уже происходит. Здесь — только то, что ты чувствуешь.
+                </p>
+            </div>
+        </div>
+        <form method="get" class="flex flex-wrap items-center gap-3">
+            <select name="period"
+                    class="select select-bordered rounded-full"
+                    onchange="this.form.submit()">
+                <option value="">Все периоды</option>
+                {% for period in periods %}
+                <option value="{{ period|date:'Y-m' }}"
+                        {% if selected_period == period|date:'Y-m' %}selected{% endif %}>
+                {{ period|date:"F Y"|capfirst }}
+                </option>
+                {% endfor %}
+            </select>
 
-    <div class="list-group">
-      {% if moments %}
-      {% for moment in moments %}
-        <a href="{% url 'moment:moment_detail' moment.pk %}" class="list-group-item list-group-item-action">
-            {{ moment.title }}
-        </a>
-      {% endfor %}
-    </div>
-  {% else %}
-  <p> У вас пока нет моментов</p>
-  {% endif %}
+            <a href="{% url 'moment:self_moments_list' %}" class="btn btn-ghost rounded-full">
+                Сбросить
+            </a>
+        </form>
+        {% if moments %}
+        <div class="moments-flow">
+            {% for moment in moments %}
+            {% include "includes/_moment_card.html" %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card bg-base-100/90 border border-white/50 shadow-sm rounded-[2rem]">
+            <div class="card-body py-10">
+                <h3 class="text-xl md:text-2xl font-semibold text-base-content mb-2">
+                    Пока тихо 🌿
+                </h3>
+                <p class="text-base-content/65 mb-5">
+                    У тебя ещё нет моментов, но первый может появиться уже сейчас.
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    </section>
 
 </div>
 {% endblock %}

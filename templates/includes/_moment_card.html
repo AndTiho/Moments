@@ -1,0 +1,25 @@
+<a href="{% url 'moment:moment_detail' moment.pk %}"
+   class="floating-card card shadow-md hover:shadow-xl transition duration-300 rounded-[2rem] overflow-hidden {% if not moment.image %}floating-card--text-only{% endif %}">
+
+    {% if moment.image %}
+    <figure class="floating-card-preview">
+        <img src="{{ moment.image.url }}" alt="{{ moment.title }}">
+    </figure>
+    {% endif %}
+
+    <div class="card-body">
+        <p class="floating-card-time">
+            {{ moment.created_at|date:"d.m.Y H:i" }}...
+        </p>
+
+        <h3 class="floating-card-title">
+            {{ moment.title }}
+        </h3>
+
+        {% if not moment.image and moment.details %}
+        <p class="floating-card-description">
+            {{ moment.details|truncatechars:140 }}
+        </p>
+        {% endif %}
+    </div>
+</a>

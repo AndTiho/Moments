@@ -59,7 +59,29 @@ class ListSelfMomentView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Moment.objects.filter(owner=self.request.user).order_by("-created_at")
+        queryset = Moment.objects.filter(owner=self.request.user).order_by("-created_at")
+
+        period = self.request.GET.get("period")
+
+        if period:
+            year, month = period.split("-")
+            queryset = queryset.filter(
+                created_at__year=year,
+                created_at__month=month
+            )
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["periods"] = (
+            Moment.objects.filter(owner=self.request.user)
+            .dates("created_at", "month", order="DESC")
+        )
+        context["selected_period"] = self.request.GET.get("period", "")
+
+        return context
 
 
 class ListPublicMomentView(ListView):
@@ -80,14 +102,37 @@ class SearchMomentView(ListView):
     context_object_name = "moments"
 
     def get_queryset(self):
-        query = self.request.GET.get("q")
+        return Moment.objects.none()
 
-        if not query:
-            return Moment.objects.none()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get("q", "").strip()
 
-        return Moment.objects.filter(
-            Q(title__icontains=query) | Q(details__icontains=query)
-        )
+        my_results = Moment.objects.none()
+        public_results = Moment.objects.none()
+
+        if query:
+            search_q = Q(title__icontains=query) | Q(details__icontains=query)
+
+            if self.request.user.is_authenticated:
+                my_results = Moment.objects.filter(
+                    owner=self.request.user
+                ).filter(search_q)
+
+                public_results = Moment.objects.filter(
+                    is_public=True
+                ).exclude(
+                    owner=self.request.user
+                ).filter(search_q)
+            else:
+                public_results = Moment.objects.filter(
+                    is_public=True
+                ).filter(search_q)
+
+        context["query"] = query
+        context["my_results"] = my_results
+        context["public_results"] = public_results
+        return context
 
 
 class DetailMomentView(LoginRequiredMixin, DetailView):
