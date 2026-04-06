@@ -1,11 +1,35 @@
+from unittest.mock import patch, PropertyMock
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
+from io import BytesIO
+from django.core.files.uploadedfile import SimpleUploadedFile
+from PIL import Image
 
+from apps.moment.forms import MomentForm
 from apps.moment.models import Moment
 
 User = get_user_model()
 
+
+def make_test_image(
+        name="test.jpg",
+        size=(500, 500),
+        image_format="JPEG",
+        color="red",
+        content_type="image/jpeg",
+):
+    buffer = BytesIO()
+    image = Image.new("RGB", size, color=color)
+    image.save(buffer, format=image_format)
+    buffer.seek(0)
+
+    return SimpleUploadedFile(
+        name=name,
+        content=buffer.getvalue(),
+        content_type=content_type,
+    )
 
 class MomentTests(TestCase):
     def setUp(self):
@@ -23,6 +47,8 @@ class MomentTests(TestCase):
             details="Какой-то текст",
             is_public=True,
         )
+
+
 
     def test_home_not_authenticated(self):
         response = self.client.get(reverse("moment:home"))
@@ -153,3 +179,76 @@ class MomentTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["moments"]), 0)
+
+    def test_clean_image_accepts_valid_image(self):
+        image = make_test_image(size=(800, 800))
+
+        form = MomentForm(data={"title": "Тест", "details": "Описание"}, files={"image": image})
+
+        self.assertTrue(form.is_valid(), form.errors)
+        cleaned_image = form.cleaned_data["image"]
+
+        self.assertTrue(cleaned_image.name.endswith(".jpg"))
+        self.assertEqual(cleaned_image.content_type, "image/jpeg")
+
+    def test_clean_image_resizes_large_image(self):
+        image = make_test_image(name="big.jpg", size=(3000, 2000))
+
+        form = MomentForm(data={"title": "Тест", "details": "Описание"}, files={"image": image})
+
+        self.assertTrue(form.is_valid(), form.errors)
+
+        cleaned_image = form.cleaned_data["image"]
+        cleaned_image.seek(0)
+
+        img = Image.open(cleaned_image)
+        self.assertLessEqual(max(img.size), 1600)
+
+
+    def test_clean_image_rejects_small_image(self):
+        image = make_test_image(size=(300, 300))
+
+        form = MomentForm(data={"title": "Тест", "details": "Описание"}, files={"image": image})
+
+        self.assertFalse(form.is_valid())
+        self.assertIn("image", form.errors)
+        self.assertIn("Картинка слишком маленькая", form.errors["image"][0])
+
+    def test_clean_image_rejects_invalid_image_file(self):
+        image = SimpleUploadedFile(
+            "fake.jpg",
+            b"not really an image",
+            content_type="image/jpeg",
+        )
+
+        form = MomentForm(data={"title": "Тест", "details": "Описание"}, files={"image": image})
+
+        self.assertFalse(form.is_valid())
+        self.assertIn("image", form.errors)
+        self.assertIn("Upload a valid image", form.errors["image"][0])
+
+    def test_clean_image_resizes_large_wight(self):
+        image = make_test_image(size=(1000, 1000))
+
+        with patch.object(type(image), "size", new_callable=PropertyMock) as mock_size:
+            mock_size.return_value = 11 * 1024 * 1024
+
+            form = MomentForm(
+                data={"title": "Тест", "details": "Описание"},
+                files={"image": image},
+            )
+
+            self.assertFalse(form.is_valid())
+            self.assertIn("Картинка слишком большая", form.errors["image"][0])
+
+    def test_clean_image_rejects_too_large_dimensions(self):
+        image = make_test_image(size=(9001, 400))
+
+        form = MomentForm(
+            data={"title": "Тест", "details": "Описание"},
+            files={"image": image},
+        )
+
+        self.assertFalse(form.is_valid())
+        self.assertIn("image", form.errors)
+        self.assertIn("Изображение слишком большое", form.errors["image"][0])
