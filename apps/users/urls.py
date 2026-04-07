@@ -6,6 +6,7 @@ from django.contrib.auth.views import (
 )
 from django.urls import path, reverse_lazy
 
+from apps.users.forms import CustomAuthenticationForm, CustomPasswordChangeForm
 from apps.users.views import (
     RegisterView,
     UserDeleteView,
@@ -17,7 +18,14 @@ app_name = "users"
 
 urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
-    path("login/", LoginView.as_view(template_name="users/login.html"), name="login"),
+    path(
+        "login/",
+        LoginView.as_view(
+            template_name="users/login.html",
+            authentication_form=CustomAuthenticationForm,
+        ),
+        name="login",
+    ),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("profile/<int:pk>/", UserDetailView.as_view(), name="profile"),
     path("update/<int:pk>/", UserUpdateView.as_view(), name="update"),
@@ -26,7 +34,7 @@ urlpatterns = [
         "password-change/",
         PasswordChangeView.as_view(
             template_name="users/password_change.html",
-            success_url=reverse_lazy("users:password_change_done"),
+            form_class=CustomPasswordChangeForm,
         ),
         name="password_change",
     ),

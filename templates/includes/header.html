@@ -68,14 +68,15 @@
                         <a href="{% url 'users:profile' user.pk %}">Профиль</a>
                     </li>
                     <li>
-                        <form method="post" action="{% url 'users:logout' %}">
-                            {% csrf_token %}
-                            <button type="submit" class="w-full text-left">
-                                Выход
-                            </button>
-                        </form>
+                        <button type="submit" form="logout-form" class="text-left">
+                            Выход
+                        </button>
                     </li>
                 </ul>
+
+                <form id="logout-form" method="post" action="{% url 'users:logout' %}" class="hidden">
+                    {% csrf_token %}
+                </form>
             </div>
             {% else %}
             <div class="dropdown dropdown-end">

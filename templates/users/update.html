@@ -1,13 +1,103 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1>Редактировать пользователя</h1>
+<section class="max-w-5xl mx-auto px-4 py-10">
+    <div class="max-w-3xl mb-6">
+        <h1 class="nature-title text-3xl md:text-4xl">
+            Редактировать профиль
+        </h1>
+        <p class="text-base-content/60 mt-2">
+            Настрой то, как ты будешь присутствовать здесь.
+        </p>
+    </div>
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Сохранить</button>
-    </form>
-</div>
+    <div>
+        <form method="post" class="space-y-5 w-full">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-error">
+                <span>{{ form.non_field_errors.0 }}</span>
+            </div>
+            {% endif %}
+
+            <div class="lg:flex gap-10">
+                <div class="w-full lg:w-2/5 space-y-5">
+
+                    <div class="rounded-2xl bg-base-100/30 backdrop-blur-md shadow-md p-4 space-y-2 transition hover:shadow-lg hover:-translate-y-1">
+                        <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium">
+                            Никнэйм
+                        </label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                        <p class="text-error text-sm">{{ form.username.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="rounded-2xl bg-base-100/30 backdrop-blur-md shadow-md p-4 space-y-2 transition hover:shadow-lg hover:-translate-y-1">
+                        <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium">
+                            Имя
+                        </label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                        <p class="text-error text-sm">{{ form.first_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="rounded-2xl bg-base-100/30 backdrop-blur-md shadow-md p-4 space-y-2 transition hover:shadow-lg hover:-translate-y-1">
+                        <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium">
+                            Email
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                        <p class="text-error text-sm">{{ form.email.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="rounded-2xl bg-base-100/30 backdrop-blur-md shadow-md p-4 space-y-2 transition hover:shadow-lg hover:-translate-y-1">
+                        <label for="{{ form.header_name_preference.id_for_label }}" class="block text-sm font-medium">
+                            Что показывать в шапке
+                        </label>
+                        {{ form.header_name_preference }}
+                        {% if form.header_name_preference.errors %}
+                        <p class="text-error text-sm">{{ form.header_name_preference.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                        <button type="submit"
+                                class="btn btn-primary rounded-full px-6 transition hover:shadow-lg hover:-translate-y-1">
+                            Сохранить
+                        </button>
+                        <a href="{% url 'users:profile' user.pk %}"
+                           class="btn btn-ghost rounded-full px-6 transition hover:shadow-lg hover:-translate-y-1">
+                            Отмена
+                        </a>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-3/5 mt-6 lg:mt-0">
+                    <div class="space-y-5">
+                        <div class="rounded-[2rem] bg-base-100/10 shadow-xl p-6 transition hover:shadow-lg hover:-translate-y-1">
+                            <label for="{{ form.about_me.id_for_label }}" class="block text-sm font-medium mb-2">
+                                О себе
+                            </label>
+                            {{ form.about_me }}
+                            {% if form.about_me.errors %}
+                            <p class="text-error text-sm mt-2">{{ form.about_me.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="rounded-[2rem] bg-base-100/10 shadow-xl p-6 transition hover:shadow-lg hover:-translate-y-1">
+                            <p class="text-sm text-base-content/60 leading-relaxed">
+                                Сейчас в шапке будет отображаться:
+                                <span class="font-medium text-base-content">{{ user.header_display_name }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}
