@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
+from apps.users.forms import CustomAuthenticationForm, CustomPasswordChangeForm
+
 User = get_user_model()
 
 
@@ -67,3 +69,16 @@ class UserTests(TestCase):
         )
         self.assertEqual(response.status_code, 302)
         self.assertFalse(User.objects.filter(username="alice").exists())
+
+    def test_custom_auth_form_has_styling(self):
+        form = CustomAuthenticationForm()
+
+        assert "input" in form.fields["username"].widget.attrs["class"]
+        assert "placeholder" in form.fields["password"].widget.attrs
+
+    def test_password_change_form_fields_have_attrs(sef):
+        form = CustomPasswordChangeForm(user=None)
+
+        assert "placeholder" in form.fields["old_password"].widget.attrs
+        assert "placeholder" in form.fields["new_password1"].widget.attrs
+        assert "placeholder" in form.fields["new_password2"].widget.attrs
