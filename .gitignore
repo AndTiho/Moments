@@ -192,3 +192,5 @@ node_modules/
 
 #Media files
 media/
+
+.ai/
