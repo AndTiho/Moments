@@ -9,6 +9,7 @@ from apps.users.models import User
 
 
 class RegisterView(CreateView):
+    """Контролер регистрации нового пользователя"""
     form_class = CustomUserCreationForm
     template_name = "users/register.html"
 
@@ -19,6 +20,7 @@ class RegisterView(CreateView):
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
+    """Контролер просмотра профиля пользователя"""
     model = User
     template_name = "users/profile.html"
     context_object_name = "user"
@@ -28,6 +30,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
+    """Редактирование профиля пользователя"""
     form_class = CustomUserChangeForm
     template_name = "users/update.html"
 
@@ -39,6 +42,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class UserDeleteView(LoginRequiredMixin, DeleteView):
+    """Удаление профиля пользователя"""
     model = User
     template_name = "users/confirm_delete.html"
     success_url = reverse_lazy("moment:home")

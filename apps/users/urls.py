@@ -1,18 +1,11 @@
-from django.contrib.auth.views import (
-    LoginView,
-    LogoutView,
-    PasswordChangeDoneView,
-    PasswordChangeView,
-)
-from django.urls import path, reverse_lazy
+from django.contrib.auth.views import (LoginView, LogoutView,
+                                       PasswordChangeDoneView,
+                                       PasswordChangeView)
+from django.urls import path
 
 from apps.users.forms import CustomAuthenticationForm, CustomPasswordChangeForm
-from apps.users.views import (
-    RegisterView,
-    UserDeleteView,
-    UserDetailView,
-    UserUpdateView,
-)
+from apps.users.views import (RegisterView, UserDeleteView, UserDetailView,
+                              UserUpdateView)
 
 app_name = "users"
 

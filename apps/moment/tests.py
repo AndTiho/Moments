@@ -1,10 +1,10 @@
-from unittest.mock import patch, PropertyMock
+from io import BytesIO
+from unittest.mock import PropertyMock, patch
 
 from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
-from io import BytesIO
-from django.core.files.uploadedfile import SimpleUploadedFile
 from PIL import Image
 
 from apps.moment.forms import MomentForm
@@ -14,11 +14,11 @@ User = get_user_model()
 
 
 def make_test_image(
-        name="test.jpg",
-        size=(500, 500),
-        image_format="JPEG",
-        color="red",
-        content_type="image/jpeg",
+    name="test.jpg",
+    size=(500, 500),
+    image_format="JPEG",
+    color="red",
+    content_type="image/jpeg",
 ):
     buffer = BytesIO()
     image = Image.new("RGB", size, color=color)
@@ -30,6 +30,7 @@ def make_test_image(
         content=buffer.getvalue(),
         content_type=content_type,
     )
+
 
 class MomentTests(TestCase):
     def setUp(self):
@@ -47,8 +48,6 @@ class MomentTests(TestCase):
             details="Какой-то текст",
             is_public=True,
         )
-
-
 
     def test_home_not_authenticated(self):
         response = self.client.get(reverse("moment:home"))
@@ -183,7 +182,9 @@ class MomentTests(TestCase):
     def test_clean_image_accepts_valid_image(self):
         image = make_test_image(size=(800, 800))
 
-        form = MomentForm(data={"title": "Тест", "details": "Описание"}, files={"image": image})
+        form = MomentForm(
+            data={"title": "Тест", "details": "Описание"}, files={"image": image}
+        )
 
         self.assertTrue(form.is_valid(), form.errors)
         cleaned_image = form.cleaned_data["image"]
@@ -194,7 +195,9 @@ class MomentTests(TestCase):
     def test_clean_image_resizes_large_image(self):
         image = make_test_image(name="big.jpg", size=(3000, 2000))
 
-        form = MomentForm(data={"title": "Тест", "details": "Описание"}, files={"image": image})
+        form = MomentForm(
+            data={"title": "Тест", "details": "Описание"}, files={"image": image}
+        )
 
         self.assertTrue(form.is_valid(), form.errors)
 
@@ -204,11 +207,12 @@ class MomentTests(TestCase):
         img = Image.open(cleaned_image)
         self.assertLessEqual(max(img.size), 1600)
 
-
     def test_clean_image_rejects_small_image(self):
         image = make_test_image(size=(300, 300))
 
-        form = MomentForm(data={"title": "Тест", "details": "Описание"}, files={"image": image})
+        form = MomentForm(
+            data={"title": "Тест", "details": "Описание"}, files={"image": image}
+        )
 
         self.assertFalse(form.is_valid())
         self.assertIn("image", form.errors)
@@ -221,7 +225,9 @@ class MomentTests(TestCase):
             content_type="image/jpeg",
         )
 
-        form = MomentForm(data={"title": "Тест", "details": "Описание"}, files={"image": image})
+        form = MomentForm(
+            data={"title": "Тест", "details": "Описание"}, files={"image": image}
+        )
 
         self.assertFalse(form.is_valid())
         self.assertIn("image", form.errors)

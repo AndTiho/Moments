@@ -19,6 +19,7 @@ class User(AbstractUser):
 
     @property
     def header_display_name(self):
+        """Для выбора пользователю какое имя высвечивать при заходе на сайт"""
         if self.header_name_preference == "name" and self.first_name:
             return self.first_name
         return self.username

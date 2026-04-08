@@ -1,5 +1,5 @@
-from io import BytesIO
 import os
+from io import BytesIO
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -25,29 +25,40 @@ class MomentForm(forms.ModelForm):
         model = Moment
         fields = ("title", "details", "image", "music_url", "is_public")
         widgets = {
-            "title": forms.TextInput(attrs={
-                "class": "input input-bordered w-full rounded-2xl",
-                "placeholder": "Например: Тёплый ветер и чай с мятой",
-            }),
-            "details": forms.Textarea(attrs={
-                "class": "textarea textarea-bordered w-full rounded-2xl min-h-40",
-                "placeholder": "Что ты чувствуешь прямо сейчас?",
-            }),
-            "image": forms.FileInput(attrs={
-                "class": "file-input file-input-bordered w-full rounded-2xl",
-                "id": "image-input",
-                "accept": "image/*",
-            }),
-            "music_url": forms.URLInput(attrs={
-                "class": "input input-bordered w-full rounded-2xl",
-                "placeholder": "https://...",
-            }),
-            "is_public": forms.CheckboxInput(attrs={
-                "class": "toggle toggle-primary",
-            }),
+            "title": forms.TextInput(
+                attrs={
+                    "class": "input input-bordered w-full rounded-2xl",
+                    "placeholder": "Например: Тёплый ветер и чай с мятой",
+                }
+            ),
+            "details": forms.Textarea(
+                attrs={
+                    "class": "textarea textarea-bordered w-full rounded-2xl min-h-40",
+                    "placeholder": "Что ты чувствуешь прямо сейчас?",
+                }
+            ),
+            "image": forms.FileInput(
+                attrs={
+                    "class": "file-input file-input-bordered w-full rounded-2xl",
+                    "id": "image-input",
+                    "accept": "image/*",
+                }
+            ),
+            "music_url": forms.URLInput(
+                attrs={
+                    "class": "input input-bordered w-full rounded-2xl",
+                    "placeholder": "https://...",
+                }
+            ),
+            "is_public": forms.CheckboxInput(
+                attrs={
+                    "class": "toggle toggle-primary",
+                }
+            ),
         }
 
     def clean_image(self):
+        """Набор валидаций для проверки картинки"""
         image = self.cleaned_data.get("image")
 
         if not image:
@@ -116,6 +127,7 @@ class MomentForm(forms.ModelForm):
         return cleaned_data
 
     def save(self, commit=True):
+        """Пересохранение и удаление из базы данных media файлов"""
         old_image = self._old_image.name if self._old_image else None
         uploaded_new_image = "image" in self.files
 

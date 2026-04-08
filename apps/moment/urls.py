@@ -1,15 +1,9 @@
 from django.urls import path
 
-from apps.moment.views import (
-    CreateMomentView,
-    DeleteMomentView,
-    DetailMomentView,
-    HomeMomentView,
-    ListPublicMomentView,
-    ListSelfMomentView,
-    SearchMomentView,
-    UpdateMomentView,
-)
+from apps.moment.views import (CreateMomentView, DeleteMomentView,
+                               DetailMomentView, HomeMomentView,
+                               ListPublicMomentView, ListSelfMomentView,
+                               SearchMomentView, UpdateMomentView)
 
 app_name = "moment"
 
