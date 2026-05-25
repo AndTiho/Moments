@@ -1,0 +1,66 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "moments";
+  default: true;
+
+  --color-base-100: oklch(97% 0.012 235);
+  --color-base-200: oklch(94% 0.014 235);
+  --color-base-300: oklch(90% 0.018 235);
+  --color-base-content: oklch(30% 0.03 250);
+
+  --color-primary: oklch(72% 0.08 220);
+  --color-primary-content: oklch(20% 0.03 220);
+
+  --color-secondary: oklch(80% 0.05 170);
+  --color-secondary-content: oklch(25% 0.03 170);
+
+  --color-accent: oklch(78% 0.06 140);
+  --color-accent-content: oklch(20% 0.03 140);
+
+  --color-neutral: oklch(40% 0.03 240);
+  --color-neutral-content: oklch(98% 0.01 95);
+
+  --radius-box: 1.5rem;
+  --radius-field: 1.25rem;
+  --radius-selector: 9999px;
+}
+
+body {
+  background:
+    radial-gradient(ellipse 420px 180px at 12% 10%, rgba(255, 255, 255, 0.95) 0%, rgba(255,255,255,0.72) 38%, transparent 65%),
+    radial-gradient(ellipse 380px 160px at 78% 8%, rgba(255, 255, 255, 0.92) 0%, rgba(255,255,255,0.60) 35%, transparent 68%),
+    radial-gradient(ellipse 300px 130px at 62% 22%, rgba(255, 255, 255, 0.62) 0%, rgba(255,255,255,0.28) 42%, transparent 72%),
+    linear-gradient(180deg, #b9d7f2 0%, #d9ebfa 34%, #eef7fb 62%, #edf6ef 100%);
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+    background-image: url('/static/images/dolina.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.hero-soft {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.42)),
+    radial-gradient(circle at top right, rgba(200, 230, 255, 0.35), transparent 30%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(14px);
+}
+
+textarea::placeholder,
+input::placeholder {
+  color: rgba(70, 85, 100, 0.5);
+}
+
+.moment-title {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+}
+
+
+

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto px-4 py-16 text-center">
+    <div class="rounded-[2rem] bg-base-100/30 backdrop-blur-md shadow-md p-8 max-w-md mx-auto space-y-6">
+
+        <h2 class="nature-title text-2xl">
+            Удалить профиль?
+        </h2>
+
+        <p class="text-base-content/60">
+            Ты действительно хочешь удалить профиль...
+            <span class="font-medium text-base-content">{{ user.username }}</span>?
+        </p>
+
+        <form method="post" class="space-y-3" onsubmit="return confirmDeleteProfile()">
+            {% csrf_token %}
+            <button type="submit"
+                    class="btn w-full rounded-full bg-red-500/80 hover:bg-red-500 text-white transition hover:shadow-lg hover:-translate-y-1">
+                Да, удалить
+            </button>
+        </form>
+
+        <a href="{% url 'users:profile' pk=request.user.pk %}"
+           class="btn btn-ghost w-full rounded-full">
+            Отмена
+        </a>
+
+    </div>
+</section>
+
+<script>
+    function confirmDeleteProfile() {
+        return confirm(
+            "Точно точно? Ты удаляешь не просто моменты, а часть своей жизни, сохранённой через них."
+        );
+    }
+</script>
+{% endblock %}

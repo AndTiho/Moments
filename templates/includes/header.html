@@ -1,0 +1,105 @@
+<header class="relative z-50 border-b border-base-300 bg-base-100/80 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3 justify-between">
+
+        <!-- Левая часть -->
+        <nav class="flex flex-wrap items-center gap-2">
+            <a href="{% url 'moment:home' %}" class="btn btn-ghost btn-sm rounded-full">
+                Главная
+            </a>
+            <a href="{% url 'moment:self_moments_list' %}" class="btn btn-ghost btn-sm rounded-full">
+                Мои моменты
+            </a>
+            <a href="{% url 'moment:public_moments_list' %}" class="btn btn-ghost btn-sm rounded-full">
+                Публичные
+            </a>
+            {% if user.is_authenticated %}
+            {% if request.resolver_match.url_name != 'home' %}
+            <a href="{% url 'moment:create' %}"
+               class="btn rounded-full px-3 h-8 text-xs
+               bg-gradient-to-r from-green-200/40 to-blue-200/40
+               text-slate-700
+               border border-white/30
+               shadow-sm
+               hover:from-green-200/80 hover:to-blue-200/80
+               hover:shadow-lg hover:-translate-y-[2px]
+               transition-all duration-300
+               active:scale-[0.95]">
+                Создать момент
+            </a>
+            {% endif %}
+            {% endif %}
+        </nav>
+
+        <!-- Центр -->
+        <div class="flex flex-wrap items-center justify-center gap-2 grow min-w-0">
+            <form method="get" action="{% url 'moment:search' %}" class="flex items-center gap-2 min-w-0">
+                <input
+                        type="text"
+                        name="q"
+                        placeholder="Поиск..."
+                        value="{{ request.GET.q }}"
+                        class="input input-bordered input-sm w-32 sm:w-48 md:w-64 rounded-full"
+                >
+                <button type="submit" class="btn btn-sm rounded-full">
+                    🔍
+                </button>
+            </form>
+
+
+        </div>
+
+        <!-- Правая часть -->
+        <div class="flex items-center gap-2 shrink-0">
+            {% if user.is_authenticated %}
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-ghost btn-sm rounded-full gap-2">
+                    <div class="w-7 h-7 rounded-full bg-primary text-primary-content flex items-center justify-center text-xs font-semibold">
+                        {{ user.header_display_name|first|upper }}
+                    </div>
+                    <span>{{ user.header_display_name }}</span>
+                </label>
+
+                <ul tabindex="0"
+                    class="dropdown-content menu bg-base-100 rounded-box z-50 w-56 p-2 shadow-lg border border-base-200 mt-2">
+                    <li class="menu-title">
+                        <span>Привет, {{ user.header_display_name }}</span>
+                    </li>
+                    <li>
+                        <a href="{% url 'users:profile' user.pk %}">Профиль</a>
+                    </li>
+                    <li>
+                        <button type="submit" form="logout-form" class="text-left">
+                            Выход
+                        </button>
+                    </li>
+                </ul>
+
+                <form id="logout-form" method="post" action="{% url 'users:logout' %}" class="hidden">
+                    {% csrf_token %}
+                </form>
+            </div>
+            {% else %}
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-ghost btn-sm rounded-full">
+                    Аккаунт
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="h-4 w-4 ml-1"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </label>
+
+                <ul tabindex="0"
+                    class="dropdown-content menu bg-base-100 rounded-box z-50 w-48 p-2 shadow-lg border border-base-200 mt-2">
+                    <li><a href="{% url 'users:login' %}">Логин</a></li>
+                    <li><a href="{% url 'users:register' %}">Регистрация</a></li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</header>

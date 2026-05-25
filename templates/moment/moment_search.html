@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-6 md:px-6 md:py-10 space-y-12 md:space-y-16">
+    <section class="space-y-5">
+
+        <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+                {% if query %}
+                <h2 class="nature-title text-3xl md:text-5xl text-base-content flex items-baseline gap-8">
+                    <span>Результаты поиска по запросу:</span>
+                    <span class="text-base-content/70 italic">
+                    {{ query }}
+                    </span>
+                </h2>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if my_results %}
+        <div class="card bg-base-100/80 border border-white/50 shadow-sm rounded-[2rem]">
+            <div class="card-body py-5">
+                <h3 class="text-xl md:text-2xl font-semibold text-base-content mb-2">
+                    Мои моменты 🌿
+                </h3>
+            </div>
+        </div>
+        <div class="moments-flow">
+            {% for moment in my_results %}
+            {% include "includes/_moment_card.html" %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if public_results %}
+        <div class="card bg-base-100/80 border border-white/50 shadow-sm rounded-[2rem]">
+            <div class="card-body py-5">
+                <h3 class="text-xl md:text-2xl font-semibold text-base-content mb-2">
+                    Публичные моменты 🌿
+                </h3>
+            </div>
+        </div>
+        <div class="moments-flow">
+            {% for moment in public_results %}
+            {% include "includes/_moment_card.html" %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if not my_results and not public_results %}
+        <p class="text-base md:text-lg text-base-content/65 mt-2">Не найдено ни одного момента.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
