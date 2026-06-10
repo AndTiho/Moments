@@ -1,0 +1,42 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv
+venv
+
+# IDE
+.idea
+.vscode
+
+# Environment files
+.env
+.env.save
+
+# Local database
+db.sqlite3
+
+# Test and coverage
+.pytest_cache
+.coverage
+htmlcov
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Media (пока локально)
+media
+
+# Static collect
+staticfiles
