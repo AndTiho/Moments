@@ -10,12 +10,16 @@ class User(AbstractUser):
         ("name", "Имя"),
     ]
 
+    email = models.EmailField(unique=True)
     about_me = models.CharField(max_length=150, verbose_name="О себе", blank=True)
     header_name_preference = models.CharField(
         max_length=20,
         choices=HEADER_NAME_CHOICES,
         default="username",
     )
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
     @property
     def header_display_name(self):
