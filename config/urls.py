@@ -22,7 +22,7 @@ from django.urls import include, path
 from django.shortcuts import redirect
 
 urlpatterns = [
-    path("", lambda request: redirect("moments:moments_home")),
+    path("", lambda request: redirect("moment:home")),
     path("admin/", admin.site.urls),
     path("moments/", include("apps.moment.urls")),
     path("users/", include("apps.users.urls")),
