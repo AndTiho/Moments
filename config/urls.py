@@ -19,8 +19,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from django.shortcuts import redirect
 
 urlpatterns = [
+    path("", lambda request: redirect("moments:moments_home")),
     path("admin/", admin.site.urls),
     path("moments/", include("apps.moment.urls")),
     path("users/", include("apps.users.urls")),
