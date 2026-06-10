@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-6 md:px-6 md:py-10 space-y-12 md:space-y-16">
+    <section class="space-y-5">
+        <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+                <h2 class="nature-title text-3xl md:text-4xl text-base-content">
+                    Публичные записи
+                </h2>
+                <p class="text-base md:text-lg text-base-content/65 mt-2">
+                    Здесь живут мгновения, которыми захотели поделиться
+                </p>
+            </div>
+        </div>
+
+        {% if moments %}
+        <div class="moments-flow">
+            {% for moment in moments %}
+            {% include "includes/_moment_card.html" %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card bg-base-100/90 border border-white/50 shadow-sm rounded-[2rem]">
+            <div class="card-body py-10">
+                <h3 class="text-xl md:text-2xl font-semibold text-base-content mb-2">
+                    Пока тихо 🌿
+                </h3>
+                <p class="text-base-content/65 mb-5">
+                    Никто ещё не готов открыть своё сердце миру, ты можешь быть первым...
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="max-w-5xl mx-auto px-4 py-10">
+    <div class="max-w-3xl mb-6">
+        <h1 class="nature-title text-3xl md:text-4xl">
+            Профиль
+        </h1>
+        <p class="text-base-content/60 mt-2">
+            Здесь живёт твоя тихая настройка присутствия в Moments.
+        </p>
+    </div>
+
+    <div class="lg:flex gap-10">
+        <div class="w-full lg:w-2/5 space-y-5">
+            <div class="rounded-2xl bg-base-100/30 backdrop-blur-md shadow-md p-5 space-y-4 transition hover:shadow-lg hover:-translate-y-1">
+                <div>
+                    <p class="text-xs uppercase tracking-[0.18em] text-base-content/45">
+                        Никнэйм
+                    </p>
+                    <p class="text-lg font-medium break-words">
+                        {{ user.username }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-xs uppercase tracking-[0.18em] text-base-content/45">
+                        Имя
+                    </p>
+                    <p class="text-base break-words">
+                        {% if user.first_name %}
+                        {{ user.first_name }}
+                        {% else %}
+                        <span class="text-base-content/45">Пока не указано</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-xs uppercase tracking-[0.18em] text-base-content/45">
+                        Email
+                    </p>
+                    <p class="text-base break-words">
+                        {% if user.email %}
+                        {{ user.email }}
+                        {% else %}
+                        <span class="text-base-content/45">Пока не указано</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-xs uppercase tracking-[0.18em] text-base-content/45">
+                        Дата регистрации
+                    </p>
+                    <p class="text-base">
+                        {{ user.date_joined|date:"d.m.Y H:i" }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="rounded-2xl bg-base-100/30 backdrop-blur-md shadow-md p-5 space-y-3 transition hover:shadow-lg hover:-translate-y-1">
+                <p class="text-xs uppercase tracking-[0.18em] text-base-content/45">
+                    Отображение в шапке
+                </p>
+                <p class="text-base">
+                    Сейчас показывается:
+                    <span class="font-medium">{{ user.header_display_name }}</span>
+                </p>
+                <p class="text-sm text-base-content/60">
+                    Выбран режим:
+                    {% if user.header_name_preference == "name" %}
+                    Имя
+                    {% else %}
+                    Никнэйм
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="w-full lg:w-3/5 mt-6 lg:mt-0 space-y-5">
+            <div class="rounded-[2rem] bg-base-100/10 shadow-xl p-6 transition hover:shadow-lg hover:-translate-y-1 min-h-[220px]">
+                <p class="text-xs uppercase tracking-[0.18em] text-base-content/45 mb-3">
+                    О себе
+                </p>
+
+                {% if user.about_me %}
+                <p class="text-base leading-relaxed break-words">
+                    {{ user.about_me }}
+                </p>
+                {% else %}
+                <p class="text-base-content/50 leading-relaxed">
+                    Здесь пока тихо. Но ты всегда можешь добавить немного себя в настройках профиля.
+                </p>
+                {% endif %}
+            </div>
+
+            <div class="rounded-[2rem] bg-base-100/10 shadow-xl p-6 transition hover:shadow-lg hover:-translate-y-1">
+                <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+                    <a href="{% url 'users:update' pk=request.user.pk %}"
+                       class="btn rounded-full px-6 border border-emerald-200/50 bg-gradient-to-r from-emerald-100/55 to-teal-100/55 text-base-content shadow-md transition hover:-translate-y-1 hover:shadow-lg hover:border-emerald-200/70 hover:from-emerald-100/75 hover:to-teal-100/75">
+                        Редактировать профиль
+                    </a>
+
+                    <a href="{% url 'users:password_change' %}"
+                       class="btn rounded-full px-6 border border-base-content/10 bg-base-100/45 text-base-content shadow-sm transition hover:-translate-y-1 hover:shadow-md hover:bg-base-100/60">
+                        Сменить пароль
+                    </a>
+
+                    <a href="{% url 'users:confirm_delete' pk=request.user.pk %}"
+                       class="btn rounded-full px-6 border border-rose-200/50 bg-gradient-to-r from-rose-100/60 to-orange-100/50 text-base-content shadow-md transition hover:-translate-y-1 hover:shadow-lg hover:border-rose-200/70 hover:from-rose-100/80 hover:to-orange-100/70">
+                        Удалить профиль
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
